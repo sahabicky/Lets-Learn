@@ -52,7 +52,7 @@ deploy_staging:
     - npm install
     - ./node_modules/@angular/cli/bin/ng test --watch=false
     - ./node_modules/@angular/cli/bin/ng e2e
-    - ./node_modules/@angular/cli/bin/ng build --prod
+    - ./node_modules/@angular/cli/bin/ng build --prod --base-href https://sahabicky.github.io/Lets-Learn/
   environment:
     name: staging
     url: https://sahabicky.github.io/Lets-Learn/
