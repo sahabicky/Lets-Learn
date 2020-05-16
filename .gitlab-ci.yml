@@ -1,26 +1,60 @@
+# image: trion/ng-cli-karma
+
+# cache:
+#   paths:
+#     - node_modules/
+
+# deploy_stage:
+#   stage: deploy
+#   environment:
+#     name: Stage
+
+#   only:
+#     - master
+#   script:
+#     - echo "Start deploying"
+#     - rm ./package-lock.json
+#     - npm install
+#     - echo "ngh start"
+#     - npm install -g ngh
+#     - echo "ngh done"
+#     - ./node_modules/@angular/cli/bin/ng test --watch=false
+#     - ./node_modules/@angular/cli/bin/ng e2e
+#     - ./node_modules/@angular/cli/bin/ng build --prod --base-href https://sahabicky.github.io/Lets-Learn/
+#     #- ./node_modules/@angular/cli/bin/ngh
+#     #    - ./node_modules/@angular/cli/bin/ngh --dir dist/letslearn
+#     - echo "Completed deployment"
+
 image: trion/ng-cli-karma
 
 cache:
   paths:
     - node_modules/
 
-deploy_stage:
-  stage: deploy
-  environment:
-    name: Stage
+stages:
+  - test
+  - build
+  - deploy
 
-  only:
-    - master
+test:
+  stage: test
+  script: echo "Running tests"
+
+build:
+  stage: build
+  script: echo "Building the app"
+
+deploy_staging:
+  stage: deploy
   script:
-    - echo "Start deploying"
+    - echo "Deploy to staging server"
     - rm ./package-lock.json
     - npm install
-    - echo "ngh start"
-    - npm install -g ngh
-    - echo "ngh done"
     - ./node_modules/@angular/cli/bin/ng test --watch=false
     - ./node_modules/@angular/cli/bin/ng e2e
-    - ./node_modules/@angular/cli/bin/ng build --prod --base-href https://sahabicky.github.io/Lets-Learn/
-    #- ./node_modules/@angular/cli/bin/ngh
-    #    - ./node_modules/@angular/cli/bin/ngh --dir dist/letslearn
-    - echo "Completed deployment"
+    - ./node_modules/@angular/cli/bin/ng build --prod
+  environment:
+    name: staging
+    url: https://sahabicky.github.io/Lets-Learn/
+  only:
+    - master
