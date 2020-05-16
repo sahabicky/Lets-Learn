@@ -1,0 +1,25 @@
+image: trion/ng-cli-karma
+
+cache:
+  paths:
+    - node_modules/
+
+deploy_stage:
+  stage: deploy
+  environment:
+    name: Stage
+
+  only:
+    - master
+  script:
+    - echo "Start deploying"
+    - rm ./package-lock.json
+    - npm install
+    - echo "ngh start"
+    - npm install -g ngh
+    - echo "ngh done"
+    - ./node_modules/@angular/cli/bin/ng test --watch=false
+    - ./node_modules/@angular/cli/bin/ng e2e --help
+    - ./node_modules/@angular/cli/bin/ng build --prod --base-href https://sahabicky.github.io/Lets-Learn/
+    - ./node_modules/@angular/cli/bin/ngh --dir dist/letslearn
+    - echo "Completed deployment"
