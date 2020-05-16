@@ -21,6 +21,6 @@ deploy_stage:
     - ./node_modules/@angular/cli/bin/ng test --watch=false
     - ./node_modules/@angular/cli/bin/ng e2e
     - ./node_modules/@angular/cli/bin/ng build --prod --base-href https://sahabicky.github.io/Lets-Learn/
-    - ./node_modules/@angular/cli/bin/ngh
+    #- ./node_modules/@angular/cli/bin/ngh
     #    - ./node_modules/@angular/cli/bin/ngh --dir dist/letslearn
     - echo "Completed deployment"
